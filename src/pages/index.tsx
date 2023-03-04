@@ -1,22 +1,16 @@
 import Head from "next/head";
 import {
-  Badge,
   Box,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
   Card,
   Container,
   Heading,
-  Spinner,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
 } from "@chakra-ui/react";
 
-import { ChevronRightIcon } from "@chakra-ui/icons";
 import NQueensTable from "@/components/NQueensTable";
+import SudokuTable from "@/components/SudokuTable";
 
 export default function Home() {
   return (
@@ -26,12 +20,22 @@ export default function Home() {
       </Head>
       <main>
         <Container maxWidth={1100} paddingY={20}>
+          <Breadcrumb mb={5}>
+            <BreadcrumbItem fontWeight="bold" color="blue.500" isCurrentPage>
+              <BreadcrumbLink>Home</BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
           <Box>
-            <Heading mb={5} pl={2}>
-              N-Queen
-            </Heading>
+            <Heading mb={5}>N-Queen</Heading>
             <Card bg="gray.800">
               <NQueensTable />
+            </Card>
+          </Box>
+
+          <Box mt="100px">
+            <Heading mb={5}>Sudoku</Heading>
+            <Card bg="gray.800">
+              <SudokuTable />
             </Card>
           </Box>
         </Container>

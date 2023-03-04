@@ -14,17 +14,25 @@ import {
   Th,
   Thead,
   Tr,
-  NumberInput,
-  NumberInputField,
-  FormLabel,
-  InputLeftElement,
-  InputGroup,
   Text,
   Button,
 } from "@chakra-ui/react";
-import { QueenIcon } from "./QueenIcon";
+import Sudoku from "./Sudoku";
+
+import { generateSudokuBoard } from "../utils/generateSudokuBoard";
+import { useEffect, useState } from "react";
 
 const SudokuTable: React.FC = () => {
+  const [board, setBoard] = useState<number[][]>();
+
+  useEffect(() => {
+    setBoard(generateSudokuBoard());
+  }, []);
+
+  const generateNewBoard = () => {
+    setBoard(generateSudokuBoard());
+  };
+
   return (
     <>
       <TableContainer>
@@ -145,7 +153,7 @@ const SudokuTable: React.FC = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      <Accordion border="none">
+      <Accordion border="none" allowToggle>
         <AccordionItem>
           {({ isExpanded }) => (
             <>
@@ -158,7 +166,7 @@ const SudokuTable: React.FC = () => {
                     as="span"
                     flex="1"
                     textAlign="right"
-                    color={isExpanded ? "gray.200" : "blue.500"}
+                    color={isExpanded ? "gray.200" : "blue.300"}
                     fontSize={16}
                     fontWeight="bold"
                   >
@@ -167,7 +175,7 @@ const SudokuTable: React.FC = () => {
                   {isExpanded ? (
                     <CloseIcon color="gray.500" boxSize="12px" ml={2} />
                   ) : (
-                    <AddIcon color="blue.500" boxSize="15px" ml={2} />
+                    <AddIcon color="blue.300" boxSize="15px" ml={2} />
                   )}
                 </AccordionButton>
               </h2>
@@ -175,36 +183,30 @@ const SudokuTable: React.FC = () => {
                 color="gray.200"
                 p={4}
                 display="flex"
-                justifyContent="space-between"
+                flexDir="column"
+                alignItems="center"
               >
-                <Text maxW="45%">
-                  Insira o número N de rainhas que serão posicionadas em um
-                  tabuleiro NxN sem que uma rainha mate a outra.
+                <Text maxW="45%" mb={5}>
+                  Gere tabuleiros Sudoku 9x9 para serem resolvidos.
                 </Text>
-                <Box>
-                  <FormLabel htmlFor="numQueens">Número de Rainhas</FormLabel>
-                  <InputGroup>
-                    <InputLeftElement
-                      pointerEvents="none"
-                      children={<QueenIcon color="gray.300" />}
-                    />
-                    <NumberInput
-                      variant="filled"
-                      focusBorderColor="blue.500"
-                      name="numQueens"
-                      id="numQueens"
-                      min={1}
-                    >
-                      <NumberInputField
-                        pl="32px"
-                        bg="gray.900"
-                        _hover={{ bg: "gray.900" }}
-                      />
-                    </NumberInput>
-                    <Button ml={5} colorScheme="blue">
-                      Calcular
-                    </Button>
-                  </InputGroup>
+                {board && <Sudoku board={board} />}
+                <Box mt={5}>
+                  <Button
+                    mr={5}
+                    bg="teal.200"
+                    _hover={{ bg: "teal.400" }}
+                    color="teal.800"
+                    onClick={generateNewBoard}
+                  >
+                    Gerar
+                  </Button>
+                  <Button
+                    bg="blue.200"
+                    _hover={{ bg: "blue.300" }}
+                    color="blue.800"
+                  >
+                    Resolver
+                  </Button>
                 </Box>
               </AccordionPanel>
             </>

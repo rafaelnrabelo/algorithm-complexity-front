@@ -22,9 +22,13 @@ import {
   Text,
   Button,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+
 import { QueenIcon } from "./QueenIcon";
 
 const NQueensTable: React.FC = () => {
+  const router = useRouter();
+
   return (
     <>
       <TableContainer>
@@ -40,10 +44,12 @@ const NQueensTable: React.FC = () => {
           <Tbody>
             <Tr
               cursor="pointer"
+              role="link"
               transition="backdrop-filter 0.2s"
               _hover={{
                 backdropFilter: "brightness(1.15)",
               }}
+              onClick={() => router.push(`/nqueen/${1}`)}
             >
               <Td fontWeight="bold" color="gray.200">
                 15 <QueenIcon boxSize="18px" />
@@ -145,7 +151,7 @@ const NQueensTable: React.FC = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      <Accordion border="none">
+      <Accordion border="none" allowToggle>
         <AccordionItem>
           {({ isExpanded }) => (
             <>
@@ -158,7 +164,7 @@ const NQueensTable: React.FC = () => {
                     as="span"
                     flex="1"
                     textAlign="right"
-                    color={isExpanded ? "gray.200" : "blue.500"}
+                    color={isExpanded ? "gray.200" : "blue.300"}
                     fontSize={16}
                     fontWeight="bold"
                   >
@@ -167,7 +173,7 @@ const NQueensTable: React.FC = () => {
                   {isExpanded ? (
                     <CloseIcon color="gray.500" boxSize="12px" ml={2} />
                   ) : (
-                    <AddIcon color="blue.500" boxSize="15px" ml={2} />
+                    <AddIcon color="blue.300" boxSize="15px" ml={2} />
                   )}
                 </AccordionButton>
               </h2>
@@ -193,7 +199,7 @@ const NQueensTable: React.FC = () => {
                       focusBorderColor="blue.500"
                       name="numQueens"
                       id="numQueens"
-                      min={1}
+                      min={4}
                     >
                       <NumberInputField
                         pl="32px"
@@ -201,8 +207,13 @@ const NQueensTable: React.FC = () => {
                         _hover={{ bg: "gray.900" }}
                       />
                     </NumberInput>
-                    <Button ml={5} colorScheme="blue">
-                      Calcular
+                    <Button
+                      ml={5}
+                      bg="blue.200"
+                      _hover={{ bg: "blue.300" }}
+                      color="blue.800"
+                    >
+                      Resolver
                     </Button>
                   </InputGroup>
                 </Box>
